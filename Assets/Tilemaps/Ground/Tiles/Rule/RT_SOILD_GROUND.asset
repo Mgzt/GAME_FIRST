@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: RT_SOILD_GROUND
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 1399879697, guid: 5dfc46abc57e05b478e154e64dbe7732, type: 3}
+  m_DefaultSprite: {fileID: -300019542, guid: a2cb1c7eaff0d7c4da721912d2ec1759, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 1399879697, guid: 5dfc46abc57e05b478e154e64dbe7732, type: 3}
-    - {fileID: 1399879697, guid: 5dfc46abc57e05b478e154e64dbe7732, type: 3}
-    - {fileID: -1122891506, guid: 5dfc46abc57e05b478e154e64dbe7732, type: 3}
+    - {fileID: -300019542, guid: 9ec330acc1b221641b7a77e735002857, type: 3}
+    - {fileID: 1141993857, guid: 9ec330acc1b221641b7a77e735002857, type: 3}
+    - {fileID: -777385192, guid: 9ec330acc1b221641b7a77e735002857, type: 3}
+    - {fileID: 620067755, guid: a2cb1c7eaff0d7c4da721912d2ec1759, type: 3}
+    - {fileID: -976392725, guid: a2cb1c7eaff0d7c4da721912d2ec1759, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
@@ -29,13 +31,5 @@ MonoBehaviour:
     m_ColliderType: 1
     m_RandomTransform: 0
     m_Neighbors: 
-    m_NeighborPositions:
-    - {x: -1, y: 1, z: 0}
-    - {x: 0, y: 1, z: 0}
-    - {x: 1, y: 1, z: 0}
-    - {x: -1, y: 0, z: 0}
-    - {x: 1, y: 0, z: 0}
-    - {x: -1, y: -1, z: 0}
-    - {x: 0, y: -1, z: 0}
-    - {x: 1, y: -1, z: 0}
+    m_NeighborPositions: []
     m_RuleTransform: 0
