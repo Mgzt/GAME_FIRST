@@ -38,9 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Water
+    uniqueID: 3764950217
+    locked: 0
+  - name: Ground
+    uniqueID: 3328070699
+    locked: 0
+  - name: Soild
+    uniqueID: 3316478747
+    locked: 0
+  - name: Decoration
+    uniqueID: 1597468507
     locked: 0
   - name: Character
-    uniqueID: 3764950217
+    uniqueID: 309039353
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0

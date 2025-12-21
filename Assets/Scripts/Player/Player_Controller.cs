@@ -43,7 +43,7 @@ public class player_controler : MonoBehaviour
     {
         _moveDir.x = Input.GetAxisRaw("Horizontal");
         _moveDir.y = Input.GetAxisRaw("Vertical");
-        print(_moveDir);
+       
     }
 
     private void MovementUpdate()
