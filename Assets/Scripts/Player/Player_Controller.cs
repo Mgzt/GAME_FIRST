@@ -23,6 +23,11 @@ public class player_controler : MonoBehaviour
     private Directions _faceDir = Directions.RIGHT;
     private readonly int _aniMoveRight = Animator.StringToHash("Anim_player_move_right");
     private readonly int _aniIdeRight  = Animator.StringToHash("Anim_player_ide_right");
+    private readonly int _aniMoveUp = Animator.StringToHash("Anim_player_ide_up");
+    private readonly int _aniIdeUp = Animator.StringToHash("Anim_player_move_up");
+    private readonly int _aniMoveDown = Animator.StringToHash("Anim_player_move_down");
+    private readonly int _aniIdeDown = Animator.StringToHash("Anim_player_ide_down");
+    private readonly int _aniIdeStanby = Animator.StringToHash("IDE_NOT_MOVE");
     #endregion
 
     #region Tick
@@ -65,6 +70,17 @@ public class player_controler : MonoBehaviour
                 _faceDir = Directions.LEFT;
             }
         }
+        else if (_moveDir.y != 0)
+        {
+            if (_moveDir.y > 0)
+            {
+                _faceDir = Directions.UP;
+            }
+            else
+            {
+                _faceDir = Directions.DOWN;
+            }
+        }
     }
     private void UpdateAnimation()
     {
@@ -77,13 +93,27 @@ public class player_controler : MonoBehaviour
             _spriteRenderer.flipX = false;
         }
 
-        if(_moveDir.sqrMagnitude > 0)
+        var isMoving = _moveDir.sqrMagnitude > 0;
+        var animation = _aniIdeStanby;
+        print(_faceDir);
+        switch (_faceDir)
         {
-            _animator.CrossFade(_aniMoveRight,0);
+            case Directions.LEFT:
+                animation=isMoving? _aniMoveRight:_aniIdeRight;
+                break; 
+            case Directions.RIGHT:
+                animation = isMoving ? _aniMoveRight : _aniIdeRight;
+                break;
+            case Directions.UP:
+                animation = isMoving ? _aniMoveUp : _aniIdeUp;
+                break;
+            case Directions.DOWN:
+                animation = isMoving ? _aniMoveDown : _aniIdeDown;
+                break;
+            default:
+                animation = isMoving ? _aniIdeStanby : _aniIdeStanby;
+                break;
         }
-        else
-        {
-            _animator.CrossFade(_aniIdeRight, 0);
-        }
+        _animator.CrossFade(animation, 0);
     }
 }
