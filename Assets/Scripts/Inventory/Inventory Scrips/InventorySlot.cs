@@ -3,47 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class InventorySlot 
+public class InventorySlot
 {
-    [SerializeField] private InventoryItemData itemData;
-    [SerializeField] private int stackSize;
+    public ItemData itemData;
+    public int quantity;
 
-    public InventoryItemData ItemData => itemData;
-    public int StackSize => stackSize;
+    public bool IsEmpty => itemData == null;
 
-    public InventorySlot(InventoryItemData source, int amount  )
-    {
-        itemData = source;
-        stackSize = amount;
-    }
-
-    public InventorySlot()
-    {
-        ClearSlot();
-    }
-
-    public void ClearSlot()
+    public void Clear()
     {
         itemData = null;
-        stackSize = -1;
+        quantity = 0;
     }
 
-    public bool RoomLeftInStack(int amountToAdd, out int amountRemaining)
+    public bool CanStack(ItemData data)
     {
-        amountRemaining = ItemData.MaxStackSize-stackSize;
-        return RoomLeftInStack(amountToAdd);
-    }
-    public bool RoomLeftInStack(int amountToAdd)
-    {
-        if (stackSize + amountToAdd <= itemData.MaxStackSize) return true;
-        else return false;
-    }
-    public void AddToStack(int amount)
-    {
-        stackSize+= amount;
-    }
-    public void RemoveFromStack(int amount)
-    {
-        stackSize-=amount;
+        return !IsEmpty &&
+               itemData == data &&
+               itemData.stackable &&
+               quantity < itemData.maxStack;
     }
 }
+
