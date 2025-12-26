@@ -95,7 +95,7 @@ public class player_controler : MonoBehaviour
 
         var isMoving = _moveDir.sqrMagnitude > 0;
         var animation = _aniIdeStanby;
-        print(_faceDir);
+       // print(_faceDir);
         switch (_faceDir)
         {
             case Directions.LEFT:
