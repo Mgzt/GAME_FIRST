@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] int totalSlots = 24;
     [SerializeField] int hotbarSlots = 12;
     public int HotbarSize => hotbarSlots;
+    public int BagSize => totalSlots-hotbarSlots;
     public List<InventorySlot> slots = new();
 
     void Awake()
@@ -36,32 +37,89 @@ public class Inventory : MonoBehaviour
     // ================= ADD ITEM =================
     public bool AddItem(ItemData data, int amount = 1)
     {
-        // 1️⃣ Stack trước
+        //// 1️⃣ Stack trước
+        //if (data.stackable)
+        //{
+        //    foreach (var slot in slots)
+        //    {
+        //        if (slot.CanStack(data))
+        //        {
+        //            slot.quantity += amount;
+        //            return true;
+        //        }
+        //    }
+        //}
+
+        //// 2️⃣ Slot trống
+        //foreach (var slot in slots)
+        //{
+        //    if (slot.IsEmpty)
+        //    {
+        //        slot.itemData = data;
+        //        slot.quantity = amount;
+        //        return true;
+        //    }
+        //}
+
+        // 1️⃣ STACK TRƯỚC (ưu tiên hotbar)
         if (data.stackable)
         {
-            foreach (var slot in slots)
+            // stack trong hotbar
+            for (int i = 0; i < hotbarSlots; i++)
             {
-                if (slot.CanStack(data))
+                if (slots[i].CanStack(data))
                 {
-                    slot.quantity += amount;
+                    slots[i].quantity += amount;
+                    return true;
+                }
+            }
+
+            // stack trong bag
+            for (int i = hotbarSlots; i < slots.Count; i++)
+            {
+                if (slots[i].CanStack(data))
+                {
+                    slots[i].quantity += amount;
                     return true;
                 }
             }
         }
 
-        // 2️⃣ Slot trống
-        foreach (var slot in slots)
+        // 2️⃣ SLOT TRỐNG TRONG HOTBAR
+        for (int i = 0; i < hotbarSlots; i++)
         {
-            if (slot.IsEmpty)
+            if (slots[i].IsEmpty)
             {
-                slot.itemData = data;
-                slot.quantity = amount;
+                slots[i].itemData = data;
+                slots[i].quantity = amount;
                 return true;
             }
         }
 
+        // 3️⃣ SLOT TRỐNG TRONG BAG
+        for (int i = hotbarSlots; i < slots.Count; i++)
+        {
+            if (slots[i].IsEmpty)
+            {
+                slots[i].itemData = data;
+                slots[i].quantity = amount;
+                return true;
+            }
+        }
+
+
+
         Debug.Log("Inventory Full!");
         return false;
+    }
+    public InventorySlot GetBagSlot(int index)
+    {
+        int bagIndex = hotbarSlots + index;
+
+        if (bagIndex < 0 || bagIndex >= slots.Count)
+            return null;
+
+        return slots[bagIndex];
     }
 
     // ================= HOTBAR =================

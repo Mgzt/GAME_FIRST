@@ -10,22 +10,23 @@ public class BagUI : MonoBehaviour
     void Start()
     {
         CreateSlots();
-        gameObject.SetActive(false); // mặc định ẩn
+        gameObject.SetActive(false); // ẩn ban đầu
     }
 
     void Update()
     {
-        if (!gameObject.activeSelf) return;
+        if (Inventory.Instance == null) return;
 
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].SetSlot(Inventory.Instance.slots[i]);
+            InventorySlot slot = Inventory.Instance.GetBagSlot(i);
+            slots[i].SetSlot(slot);
         }
     }
 
     void CreateSlots()
     {
-        int count = Inventory.Instance.slots.Count;
+        int count = Inventory.Instance.BagSize;
         slots = new InventorySlotUI[count];
 
         for (int i = 0; i < count; i++)
