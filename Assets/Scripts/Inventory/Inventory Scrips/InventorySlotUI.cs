@@ -1,18 +1,22 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour
+public class InventorySlotUI : MonoBehaviour, IPointerClickHandler
 {
     public Image icon;
     public Text countText;
 
-    InventorySlot slotData;
+    public InventorySlot SlotData { get; private set; }
 
     public virtual void SetSlot(InventorySlot slot)
     {
-        slotData = slot;
-
-        if (slot == null || slot.IsEmpty)
+        SlotData = slot;
+        Refresh();
+    }
+    public void Refresh()
+    {
+        if (SlotData == null || SlotData.IsEmpty)
         {
             icon.enabled = false;
             countText.text = "";
@@ -20,8 +24,22 @@ public class InventorySlotUI : MonoBehaviour
         }
 
         icon.enabled = true;
-        icon.sprite = slot.itemData.icon;
+        icon.sprite = SlotData.itemData.icon;
         countText.text =
-            slot.quantity > 1 ? slot.quantity.ToString() : "";
+            SlotData.quantity > 1 ? SlotData.quantity.ToString() : "";
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Inventory.Instance.SplitStack(this);
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Inventory.Instance.PlaceHeldStack(this);
+        }
+    }
+
 }

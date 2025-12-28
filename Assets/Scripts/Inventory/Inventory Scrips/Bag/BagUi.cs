@@ -10,10 +10,11 @@ public class BagUI : MonoBehaviour
     void Start()
     {
         CreateSlots();
-        gameObject.SetActive(false); // ẩn ban đầu
+        Refresh();
+        gameObject.SetActive(false);
     }
 
-    void Update()
+    public void Refresh()
     {
         if (Inventory.Instance == null) return;
 
