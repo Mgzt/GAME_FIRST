@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     [Header("Size")]
     [SerializeField] int totalSlots = 24;
     [SerializeField] int hotbarSlots = 12;
-
+    public int HotbarSize => hotbarSlots;
     public List<InventorySlot> slots = new();
 
     void Awake()
@@ -81,5 +81,14 @@ public class Inventory : MonoBehaviour
     public InventorySlot GetSelectedSlot()
     {
         return GetHotbarSlot(SelectedHotbarIndex);
+    }
+
+    public ItemData GetSelectedItem()
+    {
+        InventorySlot slot = GetSelectedSlot();
+        if (slot == null || slot.IsEmpty)
+            return null;
+
+        return slot.itemData;
     }
 }

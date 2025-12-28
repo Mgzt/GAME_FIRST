@@ -10,7 +10,13 @@ public enum ItemType
     Crop,
     Resource
 }
-
+public enum ToolType
+{
+    None,
+    Hoe,
+    Axe,
+    WateringCan
+}
 [CreateAssetMenu(menuName = "Inventory/Item Data")]
 public class ItemData : ScriptableObject
 {
@@ -18,6 +24,7 @@ public class ItemData : ScriptableObject
     public string itemId;      // ví dụ: hoe_basic
     public string itemName;    // Cuốc
     public ItemType itemType;
+    public ToolType toolType;
 
     [Header("Visual")]
     public Sprite icon;

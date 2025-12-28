@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HotbarSlotUI : MonoBehaviour
 {
+    [Header("UI")]
     public Image icon;
     public Text countText;
     public Image highlight;
