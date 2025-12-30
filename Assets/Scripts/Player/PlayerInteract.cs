@@ -29,18 +29,37 @@ public class PlayerUseItem : MonoBehaviour
         if (Inventory.Instance == null) return;
 
         ItemData item = Inventory.Instance.GetSelectedItem();
+
+
         if (item == null) return;
 
-        if (item.itemType != ItemType.Tool) return;
+        switch(item.itemType)
+        {
+            case ItemType.Tool:
+                if (actionMap.TryGetValue(item.toolType, out ToolAction action)) action.Use();
+                else Debug.LogWarning("No ToolAction for: " + item.toolType);
+            break;
+            case ItemType.Seed:
+                if (actionMap.TryGetValue(item.toolType, out ToolAction action)) action.Use();
+                else Debug.LogWarning("No ToolAction for: " + item.toolType);
+                break;
 
-        // 🔑 GỌI ACTION ĐÚNG THEO TOOL
-        if (actionMap.TryGetValue(item.toolType, out ToolAction action))
-        {
-            action.Use();
         }
-        else
-        {
-            Debug.LogWarning("No ToolAction for: " + item.toolType);
-        }
+
+
+        //if (item.itemType != ItemType.Tool) return;
+        //// 🔑 GỌI ACTION ĐÚNG THEO TOOL
+        //if (actionMap.TryGetValue(item.toolType, out ToolAction action))
+        //{
+        //    action.Use();
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("No ToolAction for: " + item.toolType);
+        //}
+
+
+
+
     }
 }

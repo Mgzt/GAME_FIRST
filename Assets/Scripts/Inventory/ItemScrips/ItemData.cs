@@ -15,7 +15,8 @@ public enum ToolType
     None,
     Hoe,
     Axe,
-    WateringCan
+    WateringCan,
+    Seed
 }
 [CreateAssetMenu(menuName = "Inventory/Item Data")]
 public class ItemData : ScriptableObject
