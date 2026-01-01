@@ -47,6 +47,12 @@ TagManager:
   - name: TilledGround
     uniqueID: 304705961
     locked: 0
+  - name: WateredGround
+    uniqueID: 2803794843
+    locked: 0
+  - name: Crop
+    uniqueID: 111097009
+    locked: 0
   - name: Soild
     uniqueID: 3316478747
     locked: 0

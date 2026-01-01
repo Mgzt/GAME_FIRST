@@ -107,6 +107,9 @@ public class HoeAction : ToolAction
 
         // Thành công → cuốc đất
         tilledMap.SetTile(cell, tilledTile);
-       // Debug.Log("✅ HOE SUCCESS at " + cell);
+        // Debug.Log("✅ HOE SUCCESS at " + cell);
+        FarmTileData data = FarmManager.Instance.GetTile(cell);
+        data.tilled = true;
+        data.watered = false; // cuốc xong là đất khô
     }
 }

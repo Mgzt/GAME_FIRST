@@ -1,19 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SeedAction : ToolAction
 {
     public override ToolType ToolType => ToolType.Seed;
+
+    public Tilemap tilledMap;     // đất đã cuốc
+    public Tilemap cropMap;       // layer cây trồng
+
+    [SerializeField] float useRange = 1.5f;
+    [SerializeField] Transform player;
+
+   
+    
     public override void Use()
     {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int cell = FarmManager.Instance.groundMap.WorldToCell(worldPos);
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int cell = tilledMap.WorldToCell(mouseWorldPos);
 
-        if (FarmManager.Instance.PlantSeed(cell, seed))
+        // Check khoảng cách
+        Vector3 center = tilledMap.GetCellCenterWorld(cell);
+        if (Vector2.Distance(player.position, center) > useRange)
+            return;
+
+        // Phải là đất đã cuốc
+        if (tilledMap.GetTile(cell) == null)
+            return;
+
+        FarmTileData data = FarmManager.Instance.GetTile(cell);
+
+        // Chưa cuốc thì không trồng
+        if (!data.tilled)
+            return;
+
+        // Đã trồng rồi thì không trồng nữa
+        ItemData item = Inventory.Instance.GetSelectedItem();
+        if (item == null) return;
+
+        // 🌱 GIEO HẠT
+        data.seedID = item.seedID;
+        data.stage = 0;
+        data.growDay = 0;
+        data.watered = false; 
+
+        CropData crop = FarmManager.Instance.cropDB.Get(item.seedID);
+        if (crop == null)
         {
-            Inventory.Instance.ConsumeSelectedItem(1);
+            Debug.LogError("❌ Crop not found ID: " + item.seedID);
+            return;
         }
-    }
 
+        // vẽ mầm cây (stage 0)
+        cropMap.SetTile(cell, crop.growthTiles[0]);
+    }
 }

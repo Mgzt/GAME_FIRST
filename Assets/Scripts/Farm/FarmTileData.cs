@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class FarmTileData : MonoBehaviour
+﻿[System.Serializable]
+public class FarmTileData
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool tilled;     // đã cuốc chưa
+    public bool watered;    // đã tưới chưa
+    public int seedID = -1; // chưa trồng gì
+    public int growDay;     // số ngày đã lớn
+
+    public int stage;
+
+    public bool IsReadyToHarvest(CropData crop)
     {
-        
+        return seedID != -1 &&
+               stage >= crop.growthTiles.Length - 1;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

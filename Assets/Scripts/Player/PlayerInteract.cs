@@ -9,7 +9,6 @@ public class PlayerUseItem : MonoBehaviour
     {
         actionMap = new Dictionary<ToolType, ToolAction>();
 
-        // Tự động lấy tất cả ToolAction gắn trên Player
         foreach (ToolAction action in GetComponents<ToolAction>())
         {
             actionMap[action.ToolType] = action;
@@ -22,44 +21,28 @@ public class PlayerUseItem : MonoBehaviour
         {
             UseSelectedItem();
         }
+
     }
 
     void UseSelectedItem()
     {
-        if (Inventory.Instance == null) return;
+        if (Inventory.Instance == null)
+            return;
 
         ItemData item = Inventory.Instance.GetSelectedItem();
 
+        // ✋ TAY KHÔNG → HARVEST
+        ToolType typeToUse = item == null
+            ? ToolType.None
+            : item.toolType;
 
-        if (item == null) return;
-
-        switch(item.itemType)
+        if (actionMap.TryGetValue(typeToUse, out ToolAction action))
         {
-            case ItemType.Tool:
-                if (actionMap.TryGetValue(item.toolType, out ToolAction action)) action.Use();
-                else Debug.LogWarning("No ToolAction for: " + item.toolType);
-            break;
-            case ItemType.Seed:
-                if (actionMap.TryGetValue(item.toolType, out ToolAction action)) action.Use();
-                else Debug.LogWarning("No ToolAction for: " + item.toolType);
-                break;
-
+            action.Use();   // ⭐ DÙNG CHUNG
         }
-
-
-        //if (item.itemType != ItemType.Tool) return;
-        //// 🔑 GỌI ACTION ĐÚNG THEO TOOL
-        //if (actionMap.TryGetValue(item.toolType, out ToolAction action))
-        //{
-        //    action.Use();
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("No ToolAction for: " + item.toolType);
-        //}
-
-
-
-
+        else
+        {
+            Debug.LogWarning("❌ No ToolAction for: " + typeToUse);
+        }
     }
 }

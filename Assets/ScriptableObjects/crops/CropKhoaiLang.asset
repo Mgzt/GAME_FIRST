@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbb4ba1d0cda77c4db845d69f25a3ceb, type: 3}
+  m_Name: CropKhoaiLang
+  m_EditorClassIdentifier: 
+  id: 2
+  growthTiles:
+  - {fileID: 11400000, guid: c900dd522fb942044a141f1ed7f3fdf3, type: 2}
+  - {fileID: 11400000, guid: 420b30f63c2f20048b500e8e4880f081, type: 2}
+  - {fileID: 11400000, guid: 1011f3a4ea431344891d12ff4cf8fe10, type: 2}
+  - {fileID: 11400000, guid: 71291038d231f8846a04ef52a2bd55f0, type: 2}
+  daysPerStage: 01000000010000000100000001000000
+  regrow: 0
+  regrowDays: 0
+  harvestItemID: 4
