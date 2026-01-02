@@ -10,8 +10,10 @@ public class FarmManager : MonoBehaviour
     [Header("Tilemaps")]
     public Tilemap groundMap;
     public Tilemap cropMap;
+    public Tilemap tilledMap;       // Layer TileGround (đất đã cuốc)
     public Tilemap wateredMap;
-
+    public TileBase tilledTile;
+    public TileBase baseGroundTile; // đất chưa cuốc (kéo sprite ground gốc vào)
     [Header("Database")]
     public CropDatabase cropDB;
 
@@ -59,18 +61,43 @@ public class FarmManager : MonoBehaviour
         wateredMap.ClearAllTiles();
     }
 
+    //public void RestoreTile(SaveFarmTile data)
+    //{
+    //    var tile = GetTile(data.cell);
+    //    tile.seedID = data.seedID;
+    //    tile.stage = data.stage;
+    //    tile.growDay = data.growDay;
+
+    //    CropData crop = cropDB.Get(tile.seedID);
+    //    cropMap.SetTile(data.cell, crop.growthTiles[tile.stage]);
+    //}
+
     public void RestoreTile(SaveFarmTile data)
     {
-        var tile = GetTile(data.cell);
+        FarmTileData tile = GetTile(data.cell);
+
+        tile.tilled = data.tilled;
         tile.seedID = data.seedID;
         tile.stage = data.stage;
         tile.growDay = data.growDay;
 
-        CropData crop = cropDB.Get(tile.seedID);
-        cropMap.SetTile(data.cell, crop.growthTiles[tile.stage]);
+        // 🌱 1. VẼ ĐẤT ĐÃ CUỐC (NẾU CÓ)
+        if (tile.tilled)
+        {
+            groundMap.SetTile(data.cell, tilledTile);
+        }
+
+        // 🌾 2. VẼ CÂY (NẾU CÓ)
+        if (tile.seedID != -1)
+        {
+            CropData crop = cropDB.Get(tile.seedID);
+            if (crop != null)
+            {
+                int stage = Mathf.Clamp(tile.stage, 0, crop.growthTiles.Length - 1);
+                cropMap.SetTile(data.cell, crop.growthTiles[stage]);
+            }
+        }
     }
-
-
 
 
     // ================= DAY SYSTEM =================
@@ -129,9 +156,52 @@ public class FarmManager : MonoBehaviour
         if (wateredMap != null)
             wateredMap.ClearAllTiles();
     }
+
+    void LandReset()
+    {
+        foreach (var pair in tiles)
+        {
+            Vector3Int cell = pair.Key;
+            FarmTileData tile = pair.Value;
+
+            // ✔ chỉ áp dụng cho đất đã cuốc & KHÔNG có cây
+            if (tile.tilled && tile.seedID == -1)
+            {
+                tile.emptyDays++;
+
+                if (tile.emptyDays >= 3)
+                {
+                    Debug.Log("🌍 Land reset at " + cell);
+
+                    // reset data
+                    tile.tilled = false;
+                    tile.seedID = -1;
+                    tile.stage = 0;
+                    tile.growDay = 0;
+                    tile.watered = false;
+                    tile.emptyDays = 0;
+
+                    // reset visual
+                    tilledMap.SetTile(cell, null);              // XÓA ĐẤT CUỐC
+                    groundMap.SetTile(cell, baseGroundTile);    // TRẢ ĐẤT GỐC
+                    wateredMap.SetTile(cell, null);
+                    cropMap.SetTile(cell, null);
+
+                }
+            }
+            else
+            {
+                // có cây hoặc chưa cuốc → reset đếm ngày
+                tile.emptyDays = 0;
+            }
+        }
+    }
     void OnNewDay()
     {
+        
         GrowCrops();
         ResetWater();
+        LandReset();
+
     }
 }

@@ -7,6 +7,7 @@ public class FarmTileData
     public int growDay;     // số ngày đã lớn
 
     public int stage;
+    public int emptyDays;
 
     public bool IsReadyToHarvest(CropData crop)
     {

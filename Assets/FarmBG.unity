@@ -280,7 +280,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMap: {fileID: 693366877}
   cropMap: {fileID: 778708355}
+  tilledMap: {fileID: 1615989613}
   wateredMap: {fileID: 194497716}
+  tilledTile: {fileID: 11400000, guid: 616ab53973c85284cad4e48e70a38123, type: 2}
+  baseGroundTile: {fileID: 11400000, guid: b310016394d04f840ae84bedcdb5d16d, type: 2}
   cropDB: {fileID: 11400000, guid: 948200253a770af48b9cc72fffb7a02c, type: 2}
 --- !u!4 &99481062
 Transform:

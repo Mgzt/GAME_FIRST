@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 public class SeedAction : ToolAction
 {
@@ -41,8 +42,8 @@ public class SeedAction : ToolAction
         data.seedID = item.seedID;
         data.stage = 0;
         data.growDay = 0;
-        data.watered = false; 
-
+        data.watered = false;
+        data.emptyDays = 0;
         CropData crop = FarmManager.Instance.cropDB.Get(item.seedID);
         if (crop == null)
         {

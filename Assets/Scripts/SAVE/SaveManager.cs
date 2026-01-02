@@ -41,15 +41,30 @@ public class SaveManager : MonoBehaviour
             data.playerPosition = Vector3.zero; // hoặc vị trí spawn mặc định của bạn
         }
 
-        // 🌱 FARM
+        //// 🌱 FARM
+        //foreach (var pair in FarmManager.Instance.GetAllTiles())
+        //{
+        //    var t = pair.Value;
+        //    if (t.seedID == -1) continue;
+
+        //    data.farmTiles.Add(new SaveFarmTile
+        //    {
+        //        cell = pair.Key,
+        //        seedID = t.seedID,
+        //        stage = t.stage,
+        //        growDay = t.growDay
+        //    });
+        //}
         foreach (var pair in FarmManager.Instance.GetAllTiles())
         {
             var t = pair.Value;
-            if (t.seedID == -1) continue;
+
+            if (!t.tilled) continue;
 
             data.farmTiles.Add(new SaveFarmTile
             {
                 cell = pair.Key,
+                tilled = t.tilled,
                 seedID = t.seedID,
                 stage = t.stage,
                 growDay = t.growDay

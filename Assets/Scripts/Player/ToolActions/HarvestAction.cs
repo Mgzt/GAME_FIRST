@@ -54,7 +54,7 @@ public class HarvestAction : ToolAction
             tile.seedID = -1;
             tile.stage = 0;
             tile.growDay = 0;
-
+            tile.emptyDays = 0;
             cropMap.SetTile(cell, null);
             // đất vẫn còn → giữ tilled
         }

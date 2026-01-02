@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -8,4 +8,7 @@ public class SaveFarmTile
     public int seedID;
     public int stage;
     public int growDay;
+
+    public bool watered;
+    public bool tilled;   // 👈 THÊM DÒNG NÀY
 }
