@@ -22,6 +22,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6754bc43bb1515a4291eda3d3edc650c, type: 2}
   daysPerStage: 010000000100000001000000010000000100000001000000
   regrow: 1
-  regrowDays: 0
+  regrowDays: 3
   harvestItemID: 3
   regrowStage: 1

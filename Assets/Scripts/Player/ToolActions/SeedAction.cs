@@ -35,6 +35,12 @@ public class SeedAction : ToolAction
             return;
 
         // Đã trồng rồi thì không trồng nữa
+        // ❌ ĐÃ CÓ CÂY → KHÔNG ĐƯỢC GIEO
+        if (data.seedID != -1)
+        {
+            Debug.Log("❌ Tile already has a crop");
+            return;
+        }
         ItemData item = Inventory.Instance.GetSelectedItem();
         if (item == null) return;
 

@@ -105,9 +105,6 @@ public class FarmManager : MonoBehaviour
             if (tile.waitingRegrow || tile.dead)
                 continue;
 
-            if (tile.dead)
-                continue;
-
             if (tile.seedID == -1)
                 continue;
 
@@ -146,7 +143,41 @@ public class FarmManager : MonoBehaviour
             }
         }
     }
+    // =========== regrow ============
+    void HandleRegrow()
+    {
+        print("HandleRegrow ");
+        foreach (var pair in tiles)
+        {
+            Vector3Int cell = pair.Key;
+            FarmTileData tile = pair.Value;
 
+            if (!tile.waitingRegrow)
+                continue;
+
+            if (!tile.watered)
+                continue; // regrow cũng cần tưới
+
+            tile.regrowCounter++;
+
+            CropData crop = cropDB.Get(tile.seedID);
+            if (crop == null)
+                continue;
+
+            if (tile.regrowCounter >= crop.regrowDays)
+            {
+                print("LONLAI ");
+                tile.waitingRegrow = false;
+                tile.regrowCounter = 0;
+
+                // 🌿 LỚN LẠI
+                tile.stage = crop.growthTiles.Length - 1;
+                cropMap.SetTile(cell, crop.growthTiles[tile.stage]);
+
+                Debug.Log("🌱 Regrow completed at " + cell);
+            }
+        }
+    }
     void ResetWater()
     {
         foreach (var tile in tiles.Values)
@@ -228,41 +259,7 @@ public class FarmManager : MonoBehaviour
             }
         }
     }
-    // =========== regrow ============
-    void HandleRegrow()
-    {
-        print("HandleRegrow ");
-        foreach (var pair in tiles)
-        {
-            Vector3Int cell = pair.Key;
-            FarmTileData tile = pair.Value;
-
-            if (!tile.waitingRegrow)
-                continue;
-
-            if (!tile.watered)
-                continue; // regrow cũng cần tưới
-
-            tile.regrowCounter++;
-
-            CropData crop = cropDB.Get(tile.seedID);
-            if (crop == null)
-                continue;
-
-            if (tile.regrowCounter >= crop.regrowDays)
-            {
-                print("LONLAI ");
-                tile.waitingRegrow = false;
-                tile.regrowCounter = 0;
-
-                // 🌿 LỚN LẠI
-                tile.stage = crop.growthTiles.Length - 1;
-                cropMap.SetTile(cell, crop.growthTiles[tile.stage]);
-
-                Debug.Log("🌱 Regrow completed at " + cell);
-            }
-        }
-    }
+   
     void OnNewDay()
     {
         

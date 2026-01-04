@@ -51,19 +51,17 @@ public class HarvestAction : ToolAction
         // 🌾 THU HOẠCH
         if (crop.regrow)
         {
-            // tile.stage = crop.growthTiles.Length - 2;
-            //tile.growDay = 0;
-            //cropMap.SetTile(cell, crop.growthTiles[tile.stage]);
-            // 🌱 CHUYỂN SANG REGROW
+            // 🌱 CHUYỂN SANG REGROW MODE
             tile.waitingRegrow = true;
             tile.regrowCounter = 0;
 
-            tile.stage = 0;      // stage mầm
-            tile.growDay = 0;
+            // ❗ KHÔNG ĐƯỢC ĐỤNG growDay
+            // ❗ KHÔNG reset stage về 0
 
-            int harvestStage = crop.growthTiles.Length - 2;
-            tile.stage = harvestStage;
-            cropMap.SetTile(cell, crop.growthTiles[harvestStage]);
+            int regrowStage = crop.growthTiles.Length - 2; // cây sau khi hái
+            tile.stage = regrowStage;
+
+            cropMap.SetTile(cell, crop.growthTiles[regrowStage]);
         }
         else
         {
