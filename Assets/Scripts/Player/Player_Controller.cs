@@ -39,6 +39,8 @@ public class player_controler : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!GameState.CanControlPlayer)
+            return;
         MovementUpdate();
     }
     #endregion

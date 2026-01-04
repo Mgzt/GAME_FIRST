@@ -9,6 +9,8 @@ public class HoeAction : ToolAction
     public Tilemap tilledMap;       // Layer TileGround (đất đã cuốc)
     public Tilemap decorationMap;   // Layer Decoration (cây, hoa, đá trang trí...)
     public Tilemap solidMap;        // Optional: nếu có layer Solid (tường, đá lớn...)
+    public Tilemap cropMap;        // Optional: nếu có layer Solid (tường, đá lớn...)
+
 
     public TileBase tilledTile;
 
@@ -72,6 +74,23 @@ public class HoeAction : ToolAction
         // Check khoảng cách từ player
         Vector3 cellCenter = groundMap.GetCellCenterWorld(cell);
         float distance = Vector2.Distance(new Vector2(player.position.x, player.position.y), cellCenter);
+        FarmTileData data = FarmManager.Instance.GetTile(cell);
+        // nếu là cây chết → dọn
+        if (data.dead)
+        {
+            data.dead = false;
+            data.seedID = -1;
+            data.stage = 0;
+            data.growDay = 0;
+            data.dryDays = 0;
+
+            data.tilled = true;
+            data.watered = false; // cuốc xong là đất khô
+            cropMap.SetTile(cell, null);
+          //  Debug.Log("✅ DON ");
+            return;
+        }
+
         if (distance > hoeRange)
         {
             Debug.Log("❌ Quá xa để cuốc");
@@ -105,10 +124,10 @@ public class HoeAction : ToolAction
             return;
         }
 
+
         // Thành công → cuốc đất
         tilledMap.SetTile(cell, tilledTile);
-        // Debug.Log("✅ HOE SUCCESS at " + cell);
-        FarmTileData data = FarmManager.Instance.GetTile(cell);
+        Debug.Log("✅ HOE SUCCESS at " + cell);
         data.tilled = true;
         data.watered = false; // cuốc xong là đất khô
     }

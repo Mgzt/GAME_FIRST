@@ -1,0 +1,2 @@
+- cây sau khi regrown mà không thu hoạch , tưới nước thì bị reset về cây đầu tiên
+- lỗi bị k thể move khi có cây chết ???

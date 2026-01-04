@@ -20,6 +20,9 @@ public class HarvestAction : ToolAction
             return;
 
         FarmTileData tile = FarmManager.Instance.GetTile(cell);
+        if (tile.dead)
+            return; // không thu cây chết
+
         if (tile.seedID == -1)
             return;
 
@@ -29,6 +32,9 @@ public class HarvestAction : ToolAction
 
         if (!tile.IsReadyToHarvest(crop))
             return;
+
+
+
 
         // 🎁 THƯỞNG ITEM
         ItemData item =
@@ -45,9 +51,19 @@ public class HarvestAction : ToolAction
         // 🌾 THU HOẠCH
         if (crop.regrow)
         {
-            tile.stage = crop.growthTiles.Length - 2;
+            // tile.stage = crop.growthTiles.Length - 2;
+            //tile.growDay = 0;
+            //cropMap.SetTile(cell, crop.growthTiles[tile.stage]);
+            // 🌱 CHUYỂN SANG REGROW
+            tile.waitingRegrow = true;
+            tile.regrowCounter = 0;
+
+            tile.stage = 0;      // stage mầm
             tile.growDay = 0;
-            cropMap.SetTile(cell, crop.growthTiles[tile.stage]);
+
+            int harvestStage = crop.growthTiles.Length - 2;
+            tile.stage = harvestStage;
+            cropMap.SetTile(cell, crop.growthTiles[harvestStage]);
         }
         else
         {

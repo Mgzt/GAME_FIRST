@@ -7,7 +7,15 @@ public class FarmTileData
     public int growDay;     // số ngày đã lớn
 
     public int stage;
+    // 🌱 bỏ hoang
     public int emptyDays;
+    // ☠️ KHÔNG TƯỚI
+    public int dryDays;
+    public bool dead;
+
+    // 🌱 REGROW
+    public bool waitingRegrow;
+    public int regrowCounter;
 
     public bool IsReadyToHarvest(CropData crop)
     {

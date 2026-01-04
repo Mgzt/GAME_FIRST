@@ -17,6 +17,8 @@ public class PlayerUseItem : MonoBehaviour
 
     void Update()
     {
+        if (!GameState.CanControlPlayer)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
             UseSelectedItem();

@@ -43,6 +43,6 @@ public class WaterAction : ToolAction
         // Hiển thị đất ướt
         wateredMap.SetTile(cell, wateredTile);
 
-        Debug.Log("💧 Watered at " + cell);  
+       // Debug.Log("💧 Watered at " + cell);  
     }
 }

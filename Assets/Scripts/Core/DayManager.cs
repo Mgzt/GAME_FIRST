@@ -32,7 +32,7 @@ public class DayManager : MonoBehaviour
     public void NextDay()
     {
         day++;
-        Debug.Log("🌞 DAY " + day);
+       // Debug.Log("🌞 DAY " + day);
 
         OnNewDay?.Invoke(); // PHÁT SỰ KIỆN
     }

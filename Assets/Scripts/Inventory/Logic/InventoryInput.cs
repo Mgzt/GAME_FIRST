@@ -6,9 +6,20 @@ public class InventoryInput : MonoBehaviour
 
     void Update()
     {
+        if (GameState.IsSleeping)
+            return;
         if (Input.GetKeyDown(KeyCode.B))
         {
-            bagUI.SetActive(!bagUI.activeSelf);
+            ToggleBag();
         }
     }
+
+    void ToggleBag()
+    {
+        bool open = !bagUI.activeSelf;
+        bagUI.SetActive(open);
+        GameState.IsUIBlocking = open;
+    }
+
+
 }

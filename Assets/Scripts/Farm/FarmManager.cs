@@ -2,6 +2,7 @@
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 public class FarmManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class FarmManager : MonoBehaviour
     public Tilemap wateredMap;
     public TileBase tilledTile;
     public TileBase baseGroundTile; // đất chưa cuốc (kéo sprite ground gốc vào)
+    public TileBase deadCropTile; // cay chet
+
     [Header("Database")]
     public CropDatabase cropDB;
 
@@ -61,17 +64,6 @@ public class FarmManager : MonoBehaviour
         wateredMap.ClearAllTiles();
     }
 
-    //public void RestoreTile(SaveFarmTile data)
-    //{
-    //    var tile = GetTile(data.cell);
-    //    tile.seedID = data.seedID;
-    //    tile.stage = data.stage;
-    //    tile.growDay = data.growDay;
-
-    //    CropData crop = cropDB.Get(tile.seedID);
-    //    cropMap.SetTile(data.cell, crop.growthTiles[tile.stage]);
-    //}
-
     public void RestoreTile(SaveFarmTile data)
     {
         FarmTileData tile = GetTile(data.cell);
@@ -104,10 +96,17 @@ public class FarmManager : MonoBehaviour
 
     void GrowCrops()
     {
+
         foreach (var pair in tiles)
         {
             Vector3Int cell = pair.Key;
             FarmTileData tile = pair.Value;
+
+            if (tile.waitingRegrow || tile.dead)
+                continue;
+
+            if (tile.dead)
+                continue;
 
             if (tile.seedID == -1)
                 continue;
@@ -196,10 +195,80 @@ public class FarmManager : MonoBehaviour
             }
         }
     }
+    //=== cay chet  ===
+    void HandleDryCrops()
+    {
+        foreach (var pair in tiles)
+        {
+            Vector3Int cell = pair.Key;
+            FarmTileData tile = pair.Value;
+
+            // chỉ xử lý khi có cây và chưa chết
+            if (tile.seedID == -1 || tile.dead)
+                continue;
+
+            if (!tile.watered)
+            {
+                tile.dryDays++;
+
+                if (tile.dryDays >= 2)
+                {
+                    // ☠️ CÂY CHẾT
+                    tile.dead = true;
+
+                    cropMap.SetTile(cell, deadCropTile);
+
+                    Debug.Log("☠️ Crop died at " + cell);
+                }
+            }
+            else
+            {
+                // được tưới → reset đếm khô
+                tile.dryDays = 0;
+            }
+        }
+    }
+    // =========== regrow ============
+    void HandleRegrow()
+    {
+        print("HandleRegrow ");
+        foreach (var pair in tiles)
+        {
+            Vector3Int cell = pair.Key;
+            FarmTileData tile = pair.Value;
+
+            if (!tile.waitingRegrow)
+                continue;
+
+            if (!tile.watered)
+                continue; // regrow cũng cần tưới
+
+            tile.regrowCounter++;
+
+            CropData crop = cropDB.Get(tile.seedID);
+            if (crop == null)
+                continue;
+
+            if (tile.regrowCounter >= crop.regrowDays)
+            {
+                print("LONLAI ");
+                tile.waitingRegrow = false;
+                tile.regrowCounter = 0;
+
+                // 🌿 LỚN LẠI
+                tile.stage = crop.growthTiles.Length - 1;
+                cropMap.SetTile(cell, crop.growthTiles[tile.stage]);
+
+                Debug.Log("🌱 Regrow completed at " + cell);
+            }
+        }
+    }
     void OnNewDay()
     {
         
         GrowCrops();
+        HandleRegrow();
+        HandleDryCrops();
         ResetWater();
         LandReset();
 
