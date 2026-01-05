@@ -53,14 +53,20 @@ TagManager:
   - name: Crop
     uniqueID: 111097009
     locked: 0
+  - name: WalkFront
+    uniqueID: 4044448751
+    locked: 0
+  - name: Character
+    uniqueID: 309039353
+    locked: 0
   - name: Soild
     uniqueID: 3316478747
     locked: 0
   - name: Decoration
     uniqueID: 1597468507
     locked: 0
-  - name: Character
-    uniqueID: 309039353
+  - name: WalkBehind
+    uniqueID: 4001876467
     locked: 0
   - name: Default
     uniqueID: 0
