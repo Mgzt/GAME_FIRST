@@ -11,7 +11,7 @@ public class WaterAction : ToolAction
     [SerializeField] float useRange = 1.5f;
     [SerializeField] Transform player;
 
-    public override void Use()
+    protected override void Use()
     {
         if (tilledMap == null || wateredMap == null || player == null) return;
 

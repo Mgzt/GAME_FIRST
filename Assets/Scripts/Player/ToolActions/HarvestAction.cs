@@ -11,7 +11,7 @@ public class HarvestAction : ToolAction
 
     [SerializeField] float range = 1.5f;
 
-    public override void Use()
+    protected override void Use()
     {
         Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int cell = cropMap.WorldToCell(mouseWorld);

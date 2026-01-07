@@ -40,7 +40,7 @@ public class PlayerUseItem : MonoBehaviour
 
         if (actionMap.TryGetValue(typeToUse, out ToolAction action))
         {
-            action.Use();   // ⭐ DÙNG CHUNG
+            action.TryUse();   // ⭐ DÙNG CHUNG
         }
         else
         {

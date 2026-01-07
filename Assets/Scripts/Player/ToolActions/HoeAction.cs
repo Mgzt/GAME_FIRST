@@ -17,7 +17,7 @@ public class HoeAction : ToolAction
     [SerializeField] float hoeRange = 1.5f;
     [SerializeField] Transform player;
 
-    public override void Use()
+    protected override void Use()
     {
         if (groundMap == null || tilledMap == null || tilledTile == null || decorationMap == null) return;
 

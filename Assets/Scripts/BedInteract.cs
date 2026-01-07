@@ -25,6 +25,7 @@ public class BedInteract : MonoBehaviour
         {
             DayManager.Instance.NextDay();
             SaveManager.Instance.Save();
+            PlayerStats.Instance.RestoreStamina();
 
             FadeUI.Instance.FadeIn(() =>
             {

@@ -12,9 +12,9 @@ public class SeedAction : ToolAction
     [SerializeField] float useRange = 1.5f;
     [SerializeField] Transform player;
 
-   
-    
-    public override void Use()
+
+
+    protected override void Use()
     {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int cell = tilledMap.WorldToCell(mouseWorldPos);
