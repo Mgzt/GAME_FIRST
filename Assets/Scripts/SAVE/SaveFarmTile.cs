@@ -11,4 +11,7 @@ public class SaveFarmTile
 
     public bool watered;
     public bool tilled;   // 👈 THÊM DÒNG NÀY
+
+    public bool dead;
+    public int dryDays;
 }

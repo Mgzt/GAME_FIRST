@@ -67,7 +67,9 @@ public class SaveManager : MonoBehaviour
                 tilled = t.tilled,
                 seedID = t.seedID,
                 stage = t.stage,
-                growDay = t.growDay
+                growDay = t.growDay,
+                dead = t.dead,
+                dryDays= t.dryDays,
             });
         }
 

@@ -72,24 +72,47 @@ public class FarmManager : MonoBehaviour
         tile.seedID = data.seedID;
         tile.stage = data.stage;
         tile.growDay = data.growDay;
+        tile.dead = data.dead;
+        tile.dryDays = data.dryDays;
 
-        // 🌱 1. VẼ ĐẤT ĐÃ CUỐC (NẾU CÓ)
+        // 🌱 1. VẼ ĐẤT
         if (tile.tilled)
         {
             groundMap.SetTile(data.cell, tilledTile);
         }
+        else
+        {
+            groundMap.SetTile(data.cell, baseGroundTile);
+        }
 
-        // 🌾 2. VẼ CÂY (NẾU CÓ)
+        // 🌾 2. VẼ CÂY (ƯU TIÊN DEAD)
+        if (tile.dead)
+        {
+            cropMap.SetTile(data.cell, deadCropTile); // hoặc null
+            return; // ❗ CỰC QUAN TRỌNG
+        }
+
+        // 🌿 3. VẼ CÂY SỐNG
         if (tile.seedID != -1)
         {
             CropData crop = cropDB.Get(tile.seedID);
             if (crop != null)
             {
-                int stage = Mathf.Clamp(tile.stage, 0, crop.growthTiles.Length - 1);
+                int stage = Mathf.Clamp(
+                    tile.stage,
+                    0,
+                    crop.growthTiles.Length - 1
+                );
+
                 cropMap.SetTile(data.cell, crop.growthTiles[stage]);
             }
         }
+        else
+        {
+            cropMap.SetTile(data.cell, null);
+        }
     }
+
 
 
     // ================= DAY SYSTEM =================
@@ -146,11 +169,13 @@ public class FarmManager : MonoBehaviour
     // =========== regrow ============
     void HandleRegrow()
     {
-        print("HandleRegrow ");
         foreach (var pair in tiles)
         {
             Vector3Int cell = pair.Key;
             FarmTileData tile = pair.Value;
+
+            if (tile.dead)
+                continue;
 
             if (!tile.waitingRegrow)
                 continue;
