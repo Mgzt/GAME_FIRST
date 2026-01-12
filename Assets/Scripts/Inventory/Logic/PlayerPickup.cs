@@ -10,8 +10,8 @@ public class PlayerPickup : MonoBehaviour
         if (worldItem != null)
         {
 
-            print("PICK ITEM");
+            //print("PICK ITEM");
             worldItem.Pickup();
-        }else print("not PICK ITEM");
+        }
     }
 }

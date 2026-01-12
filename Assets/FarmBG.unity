@@ -72577,6 +72577,7 @@ GameObject:
   - component: {fileID: 2112007502}
   - component: {fileID: 2112007501}
   - component: {fileID: 2112007507}
+  - component: {fileID: 2112007508}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -72708,6 +72709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b180e068b3d75489897b0d02799ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 0.3
+  animationTrigger: 
   staminaCost: 1
   cropMap: {fileID: 778708355}
   tilledMap: {fileID: 693366877}
@@ -72725,6 +72728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ef0c9109ddd274cab1d9555a04bff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 0.3
+  animationTrigger: 
   staminaCost: 1
   tilledMap: {fileID: 693366877}
   wateredMap: {fileID: 194497716}
@@ -72743,6 +72748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb8a89b702e23540a5691112b4d7181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 0.3
+  animationTrigger: 
   staminaCost: 0
   tilledMap: {fileID: 693366877}
   cropMap: {fileID: 778708355}
@@ -72760,6 +72767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f3e93de33f18f40b44fe22cf1aeb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 0.3
+  animationTrigger: AXE
   staminaCost: 1
   groundMap: {fileID: 693366877}
   tilledMap: {fileID: 1615989613}
@@ -72799,6 +72808,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 100
   stamina: 0
+--- !u!95 &2112007508
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112007494}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 10d00a89228f38e479314e76de918ce1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2128525460
 GameObject:
   m_ObjectHideFlags: 0

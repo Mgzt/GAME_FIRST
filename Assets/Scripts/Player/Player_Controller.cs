@@ -35,16 +35,22 @@ public class player_controler : MonoBehaviour
     {
         GatherInput();
         CalculateFaceDir();
-        UpdateAnimation();
+        if (!IsBusy())
+            UpdateAnimation();
     }
     private void FixedUpdate()
     {
+        if (IsBusy())
+            return;
         if (!GameState.CanControlPlayer)
             return;
         MovementUpdate();
     }
     #endregion
-
+    bool IsBusy()
+    {
+        return _animator.GetCurrentAnimatorStateInfo(0).IsTag("Busy");
+    }
     #region Input Logic
     private void GatherInput()
     {
