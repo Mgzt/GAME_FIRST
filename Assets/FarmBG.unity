@@ -71955,6 +71955,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   day: 1
+  currentTime: 0
+  dayDuration: 300
 --- !u!1 &1827939176
 GameObject:
   m_ObjectHideFlags: 0
@@ -72391,6 +72393,7 @@ GameObject:
   - component: {fileID: 2033347123}
   - component: {fileID: 2033347125}
   - component: {fileID: 2033347124}
+  - component: {fileID: 2033347126}
   m_Layer: 5
   m_Name: FadeImage
   m_TagString: Untagged
@@ -72455,6 +72458,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033347122}
   m_CullTransparentMesh: 1
+--- !u!95 &2033347126
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033347122}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fc051813ae6a05c49865951e01ca3854, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2078308965
 GameObject:
   m_ObjectHideFlags: 0
